@@ -20,11 +20,6 @@ dependencies {
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
 
-	api(project(":module:com.sandpolis.core.clientserver"))
-	api(project(":module:com.sandpolis.core.instance"))
-	api(project(":module:com.sandpolis.core.net"))
-	api(project(":module:com.sandpolis.core.serveragent"))
-	
 	// https://github.com/FasterXML/jackson-databind
 	implementation("com.fasterxml.jackson.core:jackson-databind:2.12.0")
 
@@ -42,6 +37,14 @@ dependencies {
 	
 	// https://github.com/hierynomus/sshj
 	implementation("com.hierynomus:sshj:0.30.0")
+
+	if (project.getParent() == null) {
+		api("com.sandpolis:core.clientserver:0.1.0")
+		api("com.sandpolis:core.serveragent:0.1.0")
+	} else {
+		api(project(":module:com.sandpolis.core.clientserver"))
+		api(project(":module:com.sandpolis.core.serveragent"))
+	}
 }
 
 extraJavaModuleInfo {
