@@ -66,13 +66,13 @@ public abstract class AbstractGeolocationService {
 	 * Build a geolocation query for the given IP address and location attributes.
 	 *
 	 * @param ip     The IP address
-	 * @param fields The desired attributes from {@link VirtIpLocation}
+	 * @param fields The desired attributes from {@link IpLocation}
 	 * @return The query
 	 */
 	protected abstract String buildQuery(String ip, Oid... fields);
 
 	/**
-	 * Convert the query result into a {@link VirtIpLocation} object.
+	 * Convert the query result into a {@link IpLocation} object.
 	 *
 	 * @param result The query result
 	 * @return The location
