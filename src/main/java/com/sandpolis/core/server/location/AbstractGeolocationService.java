@@ -21,8 +21,8 @@ import java.util.concurrent.CompletionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sandpolis.core.foundation.Config;
 import com.sandpolis.core.instance.state.oid.Oid;
+import com.sandpolis.core.server.config.CfgServer;
 
 /**
  * An {@link AbstractGeolocationService} resolves a set of location attributes
@@ -45,7 +45,7 @@ public abstract class AbstractGeolocationService {
 	/**
 	 * The request timeout.
 	 */
-	private Duration timeout = Duration.ofSeconds(Config.GEOLOCATION_TIMEOUT.value().orElse(5));
+	private Duration timeout = Duration.ofSeconds(CfgServer.GEOLOCATION_TIMEOUT.value().orElse(5));
 
 	protected AbstractGeolocationService(String protocol) {
 		this.protocol = Objects.requireNonNull(protocol).toLowerCase();

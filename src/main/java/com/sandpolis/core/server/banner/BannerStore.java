@@ -22,13 +22,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.protobuf.ByteString;
-import com.sandpolis.core.foundation.Config;
+import com.sandpolis.core.clientserver.msg.MsgServer.RS_ServerBanner;
 import com.sandpolis.core.foundation.ConfigStruct;
 import com.sandpolis.core.instance.Core;
 import com.sandpolis.core.instance.store.ConfigurableStore;
 import com.sandpolis.core.instance.store.StoreBase;
 import com.sandpolis.core.server.banner.BannerStore.ServerStoreConfig;
-import com.sandpolis.core.clientserver.msg.MsgServer.RS_ServerBanner;
+import com.sandpolis.core.server.config.CfgServer;
 
 /**
  * {@link BannerStore} manages the server banner which is presented to new
@@ -67,9 +67,9 @@ public final class BannerStore extends StoreBase implements ConfigurableStore<Se
 			log.debug("Reloading server banner");
 
 		var b = RS_ServerBanner.newBuilder().setVersion(Core.SO_BUILD.getProperty("instance.version"))
-				.setBanner(Config.BANNER_TEXT.value().orElse("Sandpolis Server"));
+				.setBanner(CfgServer.BANNER_TEXT.value().orElse("Sandpolis Server"));
 
-		Config.BANNER_IMAGE.value().ifPresentOrElse(path -> {
+		CfgServer.BANNER_IMAGE.value().ifPresentOrElse(path -> {
 			try (var in = new FileInputStream(path)) {
 				b.setBannerImage(ByteString.readFrom(in));
 			} catch (IOException e) {

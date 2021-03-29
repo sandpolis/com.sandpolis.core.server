@@ -10,6 +10,7 @@
 module com.sandpolis.core.server {
 	exports com.sandpolis.core.server.auth;
 	exports com.sandpolis.core.server.banner;
+	exports com.sandpolis.core.server.config;
 	exports com.sandpolis.core.server.channel;
 	exports com.sandpolis.core.server.agentbuilder.generator;
 	exports com.sandpolis.core.server.agentbuilder.packager;

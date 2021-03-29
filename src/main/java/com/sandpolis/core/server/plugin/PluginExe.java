@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.io.ByteSource;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLiteOrBuilder;
-import com.sandpolis.core.foundation.Config;
 import com.sandpolis.core.foundation.Result.Outcome;
 import com.sandpolis.core.foundation.util.ArtifactUtil;
 import com.sandpolis.core.foundation.util.ArtifactUtil.ParsedCoordinate;
@@ -36,6 +35,7 @@ import com.sandpolis.core.foundation.util.JarUtil;
 import com.sandpolis.core.foundation.util.NetUtil;
 import com.sandpolis.core.instance.Environment;
 import com.sandpolis.core.instance.Metatypes.InstanceFlavor;
+import com.sandpolis.core.instance.config.CfgInstance;
 import com.sandpolis.core.instance.msg.MsgPlugin.RQ_ArtifactDownload;
 import com.sandpolis.core.instance.msg.MsgPlugin.RQ_PluginInstall;
 import com.sandpolis.core.instance.msg.MsgPlugin.RS_ArtifactDownload;
@@ -120,7 +120,7 @@ public final class PluginExe extends Exelet {
 	@Handler(auth = true)
 	public static MessageLiteOrBuilder rq_plugin_install(RQ_PluginInstall rq) throws Exception {
 		var outcome = begin();
-		if (!Config.PLUGIN_ENABLED.value().orElse(true))
+		if (!CfgInstance.PLUGIN_ENABLED.value().orElse(true))
 			return failure(outcome);
 
 		Path binary = Files.createTempFile("", ".jar");
