@@ -61,7 +61,7 @@ public final class ListenerStore extends STCollectionStore<Listener> implements 
 	}
 
 	public Optional<Listener> getByPort(int port) {
-		return values().stream().filter(listener -> listener.get(ListenerOid.PORT) == port).findAny();
+		return values().stream().filter(listener -> listener.get(ListenerOid.PORT).asInt() == port).findAny();
 	}
 
 	@Override
@@ -77,8 +77,8 @@ public final class ListenerStore extends STCollectionStore<Listener> implements 
 	 */
 	public void start() {
 
-		values().stream().filter(listener -> !listener.get(ListenerOid.ACTIVE) && listener.get(ListenerOid.ENABLED))
-				.forEach(listener -> {
+		values().stream().filter(listener -> !listener.get(ListenerOid.ACTIVE).asBoolean()
+				&& listener.get(ListenerOid.ENABLED).asBoolean()).forEach(listener -> {
 					log.info("Starting listener on port: {}", listener.get(ListenerOid.PORT));
 
 					listener.start();
@@ -89,7 +89,7 @@ public final class ListenerStore extends STCollectionStore<Listener> implements 
 	 * Stop all running listeners in the store.
 	 */
 	public void stop() {
-		values().stream().filter(listener -> listener.get(ListenerOid.ACTIVE)).forEach(listener -> {
+		values().stream().filter(listener -> listener.get(ListenerOid.ACTIVE).asBoolean()).forEach(listener -> {
 			log.info("Stopping listener on port: {}", listener.get(ListenerOid.PORT));
 
 			listener.stop();

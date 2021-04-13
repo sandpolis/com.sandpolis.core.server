@@ -93,8 +93,8 @@ public final class LoginExe extends Exelet {
 		}
 
 		// Check OTP if required
-		if (user.attribute(UserOid.TOTP_SECRET).isPresent()) {
-			var key = new SecretKeySpec(user.get(UserOid.TOTP_SECRET), TOTP.getAlgorithm());
+		if (user.get(UserOid.TOTP_SECRET).isPresent()) {
+			var key = new SecretKeySpec(user.get(UserOid.TOTP_SECRET).asBytes(), TOTP.getAlgorithm());
 			try {
 				if (rq.getTotp() != TOTP.generateOneTimePassword(key, Instant.now())) {
 					log.debug("OTP validation failed", username);
@@ -114,7 +114,7 @@ public final class LoginExe extends Exelet {
 		}
 
 		// Check password
-		if (!CryptoUtil.PBKDF2.check(rq.getPassword(), user.get(UserOid.HASH))) {
+		if (!CryptoUtil.PBKDF2.check(rq.getPassword(), user.get(UserOid.HASH).asString())) {
 			log.debug("Password validation failed", username);
 			return failure(outcome, ACCESS_DENIED);
 		}
@@ -129,11 +129,12 @@ public final class LoginExe extends Exelet {
 			profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS));
 		}, () -> {
 			ProfileStore.create(profile -> {
-				profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_ADDRESS));
-				profile.set(ProfileOid.INSTANCE_TYPE, context.connector.get(ConnectionOid.REMOTE_INSTANCE));
+				profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
+				profile.set(ProfileOid.INSTANCE_TYPE,
+						context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType());
 				profile.set(ProfileOid.INSTANCE_FLAVOR, context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR));
 				profile.set(ClientOid.USERNAME, username);
-				profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS));
+				profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 			});
 		});
 

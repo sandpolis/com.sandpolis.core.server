@@ -77,7 +77,7 @@ public class Listener extends AbstractSTDomainObject {
 		if (acceptor != null)
 			throw new IllegalStateException("The listener is already running");
 
-		NetUtil.serviceName(get(PORT)).ifPresentOrElse(name -> {
+		NetUtil.serviceName(get(PORT).asInt()).ifPresentOrElse(name -> {
 			log.debug("Starting listener on port: {} ({})", get(PORT), name);
 		}, () -> {
 			log.debug("Starting listener on port: {}", get(PORT));
@@ -100,15 +100,15 @@ public class Listener extends AbstractSTDomainObject {
 		b.childHandler(new ServerChannelInitializer(config -> {
 			config.cvid = Core.cvid();
 
-			if (attribute(ListenerOid.CERTIFICATE).isPresent() && attribute(ListenerOid.PRIVATE_KEY).isPresent()) {
-				config.serverTlsWithCert(get(CERTIFICATE), get(PRIVATE_KEY));
+			if (get(ListenerOid.CERTIFICATE).isPresent() && get(ListenerOid.PRIVATE_KEY).isPresent()) {
+				config.serverTlsWithCert(get(CERTIFICATE).asBytes(), get(PRIVATE_KEY).asBytes());
 			} else {
 				config.serverTlsSelfSigned();
 			}
 		}));
 
 		try {
-			acceptor = (ServerChannel) b.bind(get(ADDRESS), get(PORT)).await().channel();
+			acceptor = (ServerChannel) b.bind(get(ADDRESS).asString(), get(PORT).asInt()).await().channel();
 		} catch (InterruptedException e) {
 			log.error("Failed to start the listener", e);
 			acceptor = null;
@@ -140,24 +140,24 @@ public class Listener extends AbstractSTDomainObject {
 	@Override
 	public ErrorCode valid() {
 
-		if (attribute(ListenerOid.PORT).isPresent() && !ValidationUtil.port(get(ListenerOid.PORT)))
+		if (get(ListenerOid.PORT).isPresent() && !ValidationUtil.port(get(ListenerOid.PORT).asInt()))
 			return INVALID_PORT;
-		if (attribute(ListenerOid.ADDRESS).isPresent() && !ipv4(get(ListenerOid.ADDRESS)))
+		if (get(ListenerOid.ADDRESS).isPresent() && !ipv4(get(ListenerOid.ADDRESS).asString()))
 			return INVALID_ADDRESS;
-		if (!attribute(ListenerOid.CERTIFICATE).isPresent() && attribute(ListenerOid.PRIVATE_KEY).isPresent())
+		if (!get(ListenerOid.CERTIFICATE).isPresent() && get(ListenerOid.PRIVATE_KEY).isPresent())
 			return INVALID_CERTIFICATE;
-		if (attribute(ListenerOid.CERTIFICATE).isPresent() && !attribute(ListenerOid.PRIVATE_KEY).isPresent())
+		if (get(ListenerOid.CERTIFICATE).isPresent() && !get(ListenerOid.PRIVATE_KEY).isPresent())
 			return INVALID_KEY;
-		if (attribute(ListenerOid.CERTIFICATE).isPresent() && attribute(ListenerOid.PRIVATE_KEY).isPresent()) {
+		if (get(ListenerOid.CERTIFICATE).isPresent() && get(ListenerOid.PRIVATE_KEY).isPresent()) {
 			// Check certificate and key formats
 			try {
-				CertUtil.parseCert(get(ListenerOid.CERTIFICATE));
+				CertUtil.parseCert(get(ListenerOid.CERTIFICATE).asBytes());
 			} catch (CertificateException e) {
 				return INVALID_CERTIFICATE;
 			}
 
 			try {
-				CertUtil.parseKey(get(ListenerOid.PRIVATE_KEY));
+				CertUtil.parseKey(get(ListenerOid.PRIVATE_KEY).asBytes());
 			} catch (InvalidKeySpecException e) {
 				return INVALID_KEY;
 			}
@@ -169,9 +169,9 @@ public class Listener extends AbstractSTDomainObject {
 	@Override
 	public ErrorCode complete() {
 
-		if (!attribute(ListenerOid.PORT).isPresent())
+		if (!get(ListenerOid.PORT).isPresent())
 			return INVALID_PORT;
-		if (!attribute(ListenerOid.ADDRESS).isPresent())
+		if (!get(ListenerOid.ADDRESS).isPresent())
 			return INVALID_ADDRESS;
 
 		return OK;

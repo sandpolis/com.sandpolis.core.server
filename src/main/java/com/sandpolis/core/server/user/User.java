@@ -36,19 +36,19 @@ public class User extends AbstractSTDomainObject {
 	 * @return Whether the given user is currently expired
 	 */
 	public boolean isExpired() {
-		var expiration = attribute(UserOid.EXPIRATION);
+		var expiration = get(UserOid.EXPIRATION);
 		if (!expiration.isPresent())
 			return false;
 
-		return expiration.get() > 0 && expiration.get() < System.currentTimeMillis();
+		return expiration.asInt() > 0 && expiration.asInt() < System.currentTimeMillis();
 	}
 
 	@Override
 	public ErrorCode valid() {
 
-		if (attribute(UserOid.USERNAME).isPresent() && !ValidationUtil.username(get(UserOid.USERNAME)))
+		if (get(UserOid.USERNAME).isPresent() && !ValidationUtil.username(get(UserOid.USERNAME).asString()))
 			return INVALID_USERNAME;
-		if (attribute(UserOid.EMAIL).isPresent() && !ValidationUtil.email(get(UserOid.EMAIL)))
+		if (get(UserOid.EMAIL).isPresent() && !ValidationUtil.email(get(UserOid.EMAIL).asString()))
 			return INVALID_EMAIL;
 
 		return OK;
@@ -57,7 +57,7 @@ public class User extends AbstractSTDomainObject {
 	@Override
 	public ErrorCode complete() {
 
-		if (!attribute(UserOid.USERNAME).isPresent())
+		if (!get(UserOid.USERNAME).isPresent())
 			return INVALID_USERNAME;
 
 		return OK;

@@ -41,7 +41,7 @@ public class Group extends AbstractSTDomainObject {
 	@Override
 	public ErrorCode valid() {
 
-		if (attribute(GroupOid.NAME).isPresent() && !group(get(GroupOid.NAME)))
+		if (get(GroupOid.NAME).isPresent() && !group(get(GroupOid.NAME).asString()))
 			return INVALID_GROUPNAME;
 
 		return OK;
@@ -50,7 +50,7 @@ public class Group extends AbstractSTDomainObject {
 	@Override
 	public ErrorCode complete() {
 
-		if (!attribute(GroupOid.NAME).isPresent())
+		if (!get(GroupOid.NAME).isPresent())
 			return INVALID_ID;
 
 		return OK;

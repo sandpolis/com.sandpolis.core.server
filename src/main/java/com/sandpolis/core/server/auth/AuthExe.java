@@ -91,7 +91,7 @@ public final class AuthExe extends Exelet {
 		// Connection is now authenticated
 		context.connector.authenticate();
 
-		ProfileStore.getByUuid(context.connector.get(ConnectionOid.REMOTE_UUID)).ifPresentOrElse(profile -> {
+		ProfileStore.getByUuid(context.connector.get(ConnectionOid.REMOTE_UUID).asString()).ifPresentOrElse(profile -> {
 			groups.forEach(group -> {
 				// TODO add client to group
 			});
@@ -101,8 +101,9 @@ public final class AuthExe extends Exelet {
 			// Metadata query
 			context.connector.request(RS_AgentMetadata.class, RQ_AgentMetadata.newBuilder()).thenAccept(rs -> {
 				var clientProfile = ProfileStore.create(profile -> {
-					profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_UUID));
-					profile.set(ProfileOid.INSTANCE_TYPE, context.connector.get(ConnectionOid.REMOTE_INSTANCE));
+					profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_UUID).asString());
+					profile.set(ProfileOid.INSTANCE_TYPE,
+							context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType());
 					profile.set(ProfileOid.INSTANCE_FLAVOR,
 							context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR));
 					profile.set(AgentOid.HOSTNAME, rs.getHostname());

@@ -38,7 +38,7 @@ public final class GroupExe extends Exelet {
 	@Handler(auth = true, instances = CLIENT)
 	public static MessageLiteOrBuilder rq_group_operation(ExeletContext context, RQ_GroupOperation rq) {
 		var outcome = begin();
-		var user = UserStore.getByCvid(context.connector.get(ConnectionOid.REMOTE_CVID)).orElse(null);
+		var user = UserStore.getByCvid(context.connector.get(ConnectionOid.REMOTE_CVID).asInt()).orElse(null);
 		if (user == null)
 			return failure(outcome, ErrorCode.ACCESS_DENIED);
 

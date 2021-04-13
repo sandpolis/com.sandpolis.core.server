@@ -44,4 +44,6 @@ module com.sandpolis.core.server {
 	requires org.slf4j;
 	requires zipset;
 	requires sshj;
+	requires org.mongodb.driver.sync.client;
+	requires org.mongodb.bson;
 }
