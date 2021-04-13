@@ -36,7 +36,7 @@ dependencies {
 	//implementation("com.eatthepath:java-otp:0.2.0")
 	
 	// https://github.com/hierynomus/sshj
-	implementation("com.hierynomus:sshj:0.30.0")
+	implementation("com.hierynomus:sshj:0.31.0")
 	
 	implementation("org.mongodb:mongodb-driver-sync:4.3.0-beta1")
 
