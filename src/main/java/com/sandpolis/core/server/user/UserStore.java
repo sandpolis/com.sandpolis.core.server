@@ -69,7 +69,7 @@ public final class UserStore extends STCollectionStore<User> implements Configur
 	}
 
 	public Optional<User> getByUsername(String username) {
-		return values().stream().filter(user -> username.equals(user.get(UserOid.USERNAME))).findAny();
+		return values().stream().filter(user -> username.equals(user.get(UserOid.USERNAME).asString())).findAny();
 	}
 
 	@Override

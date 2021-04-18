@@ -79,7 +79,7 @@ public final class ListenerStore extends STCollectionStore<Listener> implements 
 
 		values().stream().filter(listener -> !listener.get(ListenerOid.ACTIVE).asBoolean()
 				&& listener.get(ListenerOid.ENABLED).asBoolean()).forEach(listener -> {
-					log.info("Starting listener on port: {}", listener.get(ListenerOid.PORT));
+					log.info("Starting listener on port: {}", listener.get(ListenerOid.PORT).asInt());
 
 					listener.start();
 				});
@@ -90,7 +90,7 @@ public final class ListenerStore extends STCollectionStore<Listener> implements 
 	 */
 	public void stop() {
 		values().stream().filter(listener -> listener.get(ListenerOid.ACTIVE).asBoolean()).forEach(listener -> {
-			log.info("Stopping listener on port: {}", listener.get(ListenerOid.PORT));
+			log.info("Stopping listener on port: {}", listener.get(ListenerOid.PORT).asInt());
 
 			listener.stop();
 		});

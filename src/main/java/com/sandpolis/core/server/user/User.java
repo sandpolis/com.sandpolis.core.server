@@ -40,7 +40,7 @@ public class User extends AbstractSTDomainObject {
 		if (!expiration.isPresent())
 			return false;
 
-		return expiration.asInt() > 0 && expiration.asInt() < System.currentTimeMillis();
+		return expiration.asLong() > 0 && expiration.asLong() < System.currentTimeMillis();
 	}
 
 	@Override

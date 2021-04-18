@@ -63,11 +63,11 @@ public final class PluginExe extends Exelet {
 
 		PluginStore.getByPackageId(coordinate.artifactId).ifPresentOrElse(plugin -> {
 			if (!PluginStore.findComponentTypes(plugin)
-					.contains(context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR)))
+					.contains(context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor()))
 				context.reply(Outcome.newBuilder().setResult(false));// TODO message
 			else if (rq.getLocation()) {
 				context.reply(rs.setCoordinates(
-						String.format(":%s:%s", plugin.get(PluginOid.PACKAGE_ID), plugin.getVersion())));
+						String.format(":%s:%s", plugin.get(PluginOid.PACKAGE_ID).asString(), plugin.getVersion())));
 			} else {
 				// Send binary for correct component
 				ByteSource component = PluginStore.getPluginComponent(plugin,

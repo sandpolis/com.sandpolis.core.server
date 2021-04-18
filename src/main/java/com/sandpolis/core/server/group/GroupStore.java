@@ -80,7 +80,7 @@ public final class GroupStore extends STCollectionStore<Group> implements Config
 	}
 
 	public Optional<Group> getByName(String name) {
-		return values().stream().filter(group -> name.equals(group.get(GroupOid.NAME))).findAny();
+		return values().stream().filter(group -> name.equals(group.get(GroupOid.NAME).asString())).findAny();
 	}
 
 	@Override

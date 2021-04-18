@@ -64,13 +64,13 @@ public final class LoginExe extends Exelet {
 
 	@Handler(auth = true, instances = CLIENT)
 	public static void rq_logout(ExeletContext context, RQ_Logout rq) {
-		log.debug("Processing logout request from: {}", context.connector.get(ConnectionOid.REMOTE_ADDRESS));
+		log.debug("Processing logout request from: {}", context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 		context.connector.close();
 	}
 
 	@Handler(auth = false, instances = CLIENT)
 	public static MessageLiteOrBuilder rq_login(ExeletContext context, RQ_Login rq) {
-		log.debug("Processing login request from: {}", context.connector.get(ConnectionOid.REMOTE_ADDRESS));
+		log.debug("Processing login request from: {}", context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 		var outcome = begin();
 
 		// Validate username
@@ -126,13 +126,13 @@ public final class LoginExe extends Exelet {
 
 		// Update login metadata
 		ProfileStore.getClient(username).ifPresentOrElse(profile -> {
-			profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS));
+			profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 		}, () -> {
 			ProfileStore.create(profile -> {
 				profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 				profile.set(ProfileOid.INSTANCE_TYPE,
 						context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType());
-				profile.set(ProfileOid.INSTANCE_FLAVOR, context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR));
+				profile.set(ProfileOid.INSTANCE_FLAVOR, context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor());
 				profile.set(ClientOid.USERNAME, username);
 				profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 			});

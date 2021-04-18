@@ -28,7 +28,7 @@ import com.sandpolis.core.serveragent.msg.MsgAuth.RQ_NoAuth;
 import com.sandpolis.core.serveragent.msg.MsgAuth.RQ_PasswordAuth;
 import com.sandpolis.core.serveragent.msg.MsgClient.RQ_AgentMetadata;
 import com.sandpolis.core.serveragent.msg.MsgClient.RS_AgentMetadata;
-import com.sandpolis.core.instance.profile.ProfileEvents.ProfileOnlineEvent;
+import com.sandpolis.core.instance.profile.ProfileStore.ProfileOnlineEvent;
 import com.sandpolis.core.instance.state.AgentOid;
 import com.sandpolis.core.instance.state.ConnectionOid;
 import com.sandpolis.core.instance.state.ProfileOid;
@@ -96,7 +96,7 @@ public final class AuthExe extends Exelet {
 				// TODO add client to group
 			});
 
-			ProfileStore.post(ProfileOnlineEvent::new, profile);
+			ProfileStore.post(new ProfileOnlineEvent(profile));
 		}, () -> {
 			// Metadata query
 			context.connector.request(RS_AgentMetadata.class, RQ_AgentMetadata.newBuilder()).thenAccept(rs -> {
@@ -105,7 +105,7 @@ public final class AuthExe extends Exelet {
 					profile.set(ProfileOid.INSTANCE_TYPE,
 							context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType());
 					profile.set(ProfileOid.INSTANCE_FLAVOR,
-							context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR));
+							context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor());
 					profile.set(AgentOid.HOSTNAME, rs.getHostname());
 					profile.set(AgentOid.LOCATION, rs.getInstallDirectory());
 					profile.set(AgentOid.OS, rs.getOs());
@@ -115,7 +115,7 @@ public final class AuthExe extends Exelet {
 					// TODO add client to group
 				});
 
-				ProfileStore.post(ProfileOnlineEvent::new, clientProfile);
+				ProfileStore.post(new ProfileOnlineEvent(clientProfile));
 			});
 		});
 	}

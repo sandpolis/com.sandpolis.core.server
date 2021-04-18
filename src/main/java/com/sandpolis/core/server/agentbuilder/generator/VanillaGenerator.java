@@ -106,7 +106,7 @@ public class VanillaGenerator implements AgentGenerator {
 
 		// Add plugin binaries
 		for (var plugin : PluginStore.values().stream()
-				.filter(plugin -> config.getPluginList().contains(plugin.get(PluginOid.PACKAGE_ID)))
+				.filter(plugin -> config.getPluginList().contains(plugin.get(PluginOid.PACKAGE_ID).asString()))
 				.toArray(Plugin[]::new)) {
 			// TODO
 		}

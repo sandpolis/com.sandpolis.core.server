@@ -124,7 +124,7 @@ public class Listener extends AbstractSTDomainObject {
 		if (acceptor == null)
 			throw new IllegalStateException("The listener is not running");
 
-		log.debug("Stopping listener on port: {}", get(ListenerOid.PORT));
+		log.debug("Stopping listener on port: {}", get(ListenerOid.PORT).asInt());
 
 		try {
 			acceptor.close().sync();
