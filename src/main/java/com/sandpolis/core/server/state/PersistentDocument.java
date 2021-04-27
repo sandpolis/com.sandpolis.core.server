@@ -1,6 +1,5 @@
 package com.sandpolis.core.server.state;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 
 import org.bson.Document;
@@ -57,12 +56,6 @@ public class PersistentDocument implements STDocument {
 	}
 
 	@Override
-	public Collection<STAttribute> attributes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public STDocument document(String id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -72,12 +65,6 @@ public class PersistentDocument implements STDocument {
 	public int documentCount() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public Collection<STDocument> documents() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

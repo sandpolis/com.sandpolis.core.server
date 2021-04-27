@@ -108,7 +108,7 @@ public final class AuthExe extends Exelet {
 							context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor());
 					profile.set(AgentOid.HOSTNAME, rs.getHostname());
 					profile.set(AgentOid.LOCATION, rs.getInstallDirectory());
-					profile.set(AgentOid.OS, rs.getOs());
+					profile.set(AgentOid.OS_TYPE, rs.getOs());
 				});
 
 				groups.forEach(group -> {
