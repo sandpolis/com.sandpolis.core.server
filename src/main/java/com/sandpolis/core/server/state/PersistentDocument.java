@@ -1,3 +1,12 @@
+//============================================================================//
+//                                                                            //
+//                         Copyright © 2015 Sandpolis                         //
+//                                                                            //
+//  This source file is subject to the terms of the Mozilla Public License    //
+//  version 2. You may not use this file except in compliance with the MPL    //
+//  as published by the Mozilla Foundation.                                   //
+//                                                                            //
+//============================================================================//
 package com.sandpolis.core.server.state;
 
 import java.util.function.Consumer;
@@ -98,18 +107,6 @@ public class PersistentDocument implements STDocument {
 	}
 
 	@Override
-	public void merge(ProtoSTObjectUpdate snapshot) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ProtoSTObjectUpdate snapshot(Oid... oids) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void set(String id, STAttribute attribute) {
 		// TODO Auto-generated method stub
 
@@ -119,6 +116,24 @@ public class PersistentDocument implements STDocument {
 	public void set(String id, STDocument document) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void replaceParent(STDocument parent) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public STDocument getDocument(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public STAttribute getAttribute(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -132,7 +132,8 @@ public final class LoginExe extends Exelet {
 				profile.set(ProfileOid.UUID, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 				profile.set(ProfileOid.INSTANCE_TYPE,
 						context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType());
-				profile.set(ProfileOid.INSTANCE_FLAVOR, context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor());
+				profile.set(ProfileOid.INSTANCE_FLAVOR,
+						context.connector.get(ConnectionOid.REMOTE_INSTANCE_FLAVOR).asInstanceFlavor());
 				profile.set(ClientOid.USERNAME, username);
 				profile.set(ClientOid.IP, context.connector.get(ConnectionOid.REMOTE_ADDRESS).asString());
 			});

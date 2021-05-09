@@ -88,7 +88,8 @@ public final class TrustStore extends STCollectionStore<TrustAnchor> implements 
 		PKIXParameters params;
 		try (Stream<TrustAnchor> stream = values().stream()) {
 			params = new PKIXParameters(stream
-					.map(t -> new java.security.cert.TrustAnchor(t.get(TrustAnchorOid.CERTIFICATE).asX590Certificate(), null))
+					.map(t -> new java.security.cert.TrustAnchor(t.get(TrustAnchorOid.CERTIFICATE).asX590Certificate(),
+							null))
 					.collect(Collectors.toSet()));
 			params.setRevocationEnabled(false);
 		} catch (InvalidAlgorithmParameterException e) {
