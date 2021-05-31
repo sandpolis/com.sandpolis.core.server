@@ -38,7 +38,7 @@ dependencies {
 	// https://github.com/hierynomus/sshj
 	implementation("com.hierynomus:sshj:0.30.0")
 	
-	implementation("org.mongodb:mongodb-driver-sync:4.3.0-beta1")
+	implementation("org.mongodb:mongodb-driver-sync:4.3.0-beta2")
 
 	if (project.getParent() == null) {
 		api("com.sandpolis:core.clientserver:0.1.0")
