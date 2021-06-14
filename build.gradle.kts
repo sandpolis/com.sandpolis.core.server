@@ -21,7 +21,7 @@ dependencies {
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
 
 	// https://github.com/FasterXML/jackson-databind
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.12.0")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.12.3")
 
 	// https://github.com/cilki/zipset
 	implementation("com.github.cilki:zipset:1.2.1")
