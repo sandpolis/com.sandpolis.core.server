@@ -20,6 +20,7 @@ import static com.sandpolis.core.instance.state.ListenerOid.ADDRESS;
 import static com.sandpolis.core.instance.state.ListenerOid.CERTIFICATE;
 import static com.sandpolis.core.instance.state.ListenerOid.PORT;
 import static com.sandpolis.core.instance.state.ListenerOid.PRIVATE_KEY;
+import static com.sandpolis.core.net.network.NetworkStore.NetworkStore;
 
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
@@ -31,7 +32,6 @@ import com.sandpolis.core.foundation.Result.ErrorCode;
 import com.sandpolis.core.foundation.util.CertUtil;
 import com.sandpolis.core.foundation.util.NetUtil;
 import com.sandpolis.core.foundation.util.ValidationUtil;
-import com.sandpolis.core.instance.Core;
 import com.sandpolis.core.instance.state.ListenerOid;
 import com.sandpolis.core.instance.state.st.STDocument;
 import com.sandpolis.core.instance.state.vst.AbstractSTDomainObject;
@@ -98,7 +98,7 @@ public class Listener extends AbstractSTDomainObject {
 				.childOption(ChannelOption.SO_KEEPALIVE, true);
 
 		b.childHandler(new ServerChannelInitializer(config -> {
-			config.cvid = Core.cvid();
+			config.cvid = NetworkStore.cvid();
 
 			if (get(ListenerOid.CERTIFICATE).isPresent() && get(ListenerOid.PRIVATE_KEY).isPresent()) {
 				config.serverTlsWithCert(get(CERTIFICATE).asBytes(), get(PRIVATE_KEY).asBytes());

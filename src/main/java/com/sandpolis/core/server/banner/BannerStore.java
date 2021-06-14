@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.google.protobuf.ByteString;
 import com.sandpolis.core.clientserver.msg.MsgServer.RS_ServerBanner;
 import com.sandpolis.core.foundation.ConfigStruct;
-import com.sandpolis.core.instance.Core;
+import com.sandpolis.core.instance.Entrypoint;
 import com.sandpolis.core.instance.store.ConfigurableStore;
 import com.sandpolis.core.instance.store.StoreBase;
 import com.sandpolis.core.server.banner.BannerStore.ServerStoreConfig;
@@ -66,7 +66,7 @@ public final class BannerStore extends StoreBase implements ConfigurableStore<Se
 		if (banner != null)
 			log.debug("Reloading server banner");
 
-		var b = RS_ServerBanner.newBuilder().setVersion(Core.SO_BUILD.getProperty("instance.version"))
+		var b = RS_ServerBanner.newBuilder().setVersion(Entrypoint.data().so_build().getProperty("instance.version"))
 				.setBanner(CfgServer.BANNER_TEXT.value().orElse("Sandpolis Server"));
 
 		CfgServer.BANNER_IMAGE.value().ifPresentOrElse(path -> {

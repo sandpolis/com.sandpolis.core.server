@@ -24,6 +24,7 @@ module com.sandpolis.core.server {
 	exports com.sandpolis.core.server.stream;
 	exports com.sandpolis.core.server.trust;
 	exports com.sandpolis.core.server.user;
+	exports com.sandpolis.core.server.init;
 
 	requires static java.desktop;
 
