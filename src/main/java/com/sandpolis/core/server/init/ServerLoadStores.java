@@ -31,7 +31,6 @@ import java.util.concurrent.Executors;
 
 import com.sandpolis.core.instance.Entrypoint;
 import com.sandpolis.core.instance.InitTask;
-import com.sandpolis.core.instance.Metatypes.InstanceFlavor;
 import com.sandpolis.core.instance.Metatypes.InstanceType;
 import com.sandpolis.core.instance.TaskOutcome;
 import com.sandpolis.core.instance.state.oid.Oid;
@@ -89,7 +88,7 @@ public class ServerLoadStores extends InitTask {
 		});
 
 		NetworkStore.init(config -> {
-			config.cvid = CvidUtil.cvid(InstanceType.SERVER);
+			config.cvid = CvidUtil.cvid(InstanceType.SERVER, Entrypoint.data().flavor());
 			config.collection = Oid.of("/network_connection").get();
 		});
 
@@ -107,7 +106,7 @@ public class ServerLoadStores extends InitTask {
 
 		PrefStore.init(config -> {
 			config.instance = InstanceType.SERVER;
-			config.flavor = InstanceFlavor.VANILLA;
+			config.flavor = Entrypoint.data().flavor();
 		});
 
 		BannerStore.init(config -> {

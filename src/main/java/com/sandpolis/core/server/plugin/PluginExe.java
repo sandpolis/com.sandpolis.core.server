@@ -73,7 +73,7 @@ public final class PluginExe extends Exelet {
 				ByteSource component = PluginStore.getPluginComponent(plugin,
 						context.connector.get(ConnectionOid.REMOTE_INSTANCE).asInstanceType(),
 						// TODO hardcoded subtype
-						InstanceFlavor.MEGA);
+						InstanceFlavor.VANILLA);
 
 				try (var in = component.openStream()) {
 					context.reply(rs.setBinary(ByteString.readFrom(in)));

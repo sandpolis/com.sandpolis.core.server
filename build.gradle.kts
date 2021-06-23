@@ -35,10 +35,10 @@ dependencies {
 	implementation("org.mongodb:mongodb-driver-sync:4.3.0-beta1")
 
 	if (project.getParent() == null) {
-		api("com.sandpolis:core.clientserver:0.1.0")
-		api("com.sandpolis:core.serveragent:0.1.0")
-		implementation("com.sandpolis:core.net:0.2.0")
-		implementation("com.sandpolis:core.instance:0.2.0")
+		api("com.sandpolis:core.clientserver:+")
+		api("com.sandpolis:core.serveragent:+")
+		implementation("com.sandpolis:core.net:+")
+		implementation("com.sandpolis:core.instance:+")
 	} else {
 		api(project(":module:com.sandpolis.core.clientserver"))
 		api(project(":module:com.sandpolis.core.serveragent"))
