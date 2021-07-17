@@ -54,7 +54,7 @@ public class ServerLoadStores extends InitTask {
 
 	@Override
 	public TaskOutcome run(TaskOutcome outcome) throws Exception {
-		switch (CfgServer.STORAGE_PROVIDER.value().orElse("mongodb")) {
+		switch (CfgServer.STORAGE_PROVIDER.value().orElse("ephemeral")) {
 		case "mongodb":
 			// TODO
 			CfgServer.MONGODB_DATABASE.value().orElse("Sandpolis");
@@ -72,7 +72,7 @@ public class ServerLoadStores extends InitTask {
 			});
 			break;
 		default:
-			break;
+			return outcome.failure();
 		}
 
 		ProfileStore.init(config -> {
@@ -145,6 +145,11 @@ public class ServerLoadStores extends InitTask {
 	@Override
 	public String description() {
 		return "Load stores";
+	}
+
+	@Override
+	public boolean fatal() {
+		return true;
 	}
 
 }

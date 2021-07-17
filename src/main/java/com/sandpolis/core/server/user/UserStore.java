@@ -65,7 +65,14 @@ public final class UserStore extends STCollectionStore<User> implements Configur
 	}
 
 	public Optional<User> getByCvid(int cvid) {
-		return null;
+		return values().stream().filter(user -> {
+			for (int c : user.get(UserOid.CURRENT_CVID).asIntArray()) {
+				if (c == cvid) {
+					return true;
+				}
+			}
+			return false;
+		}).findAny();
 	}
 
 	public Optional<User> getByUsername(String username) {

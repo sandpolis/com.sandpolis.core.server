@@ -139,6 +139,9 @@ public final class LoginExe extends Exelet {
 			});
 		});
 
+		// TODO append instead of replace
+		user.set(UserOid.CURRENT_CVID, new int[] { context.connector.get(ConnectionOid.REMOTE_CVID).asInt() });
+
 		return success(outcome);
 	}
 
